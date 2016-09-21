@@ -6,9 +6,21 @@
  */
 
 module.exports = {
-
+	
+		
+  schema: 'true',
+	connection: 'Numinous',
+	tableName: 'user',
+		
   attributes: {
-
-  }
+      name: {type: 'string'},
+			id : { 
+         type: 'int',
+         autoIncrement: true
+      },
+  },
+   autoCreatedAt: true,
+   autoUpdatedAt: true
 };
 
+   
