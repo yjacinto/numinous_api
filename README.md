@@ -1,3 +1,5 @@
-# numinous_api
+
+
+# NuminousAPI
 
 a [Sails](http://sailsjs.org) application
