@@ -18,11 +18,11 @@ module.exports = {
       required: true
     },
     startDate: {
-      type: 'datetime',
+      type: 'date',
       required: false
     },
     endDate: {
-      type: 'datetime',
+      type: 'date',
       required: false
     },
     //numNights
@@ -31,6 +31,11 @@ module.exports = {
     events:{
       collection: 'event',
       via: 'trip'
+    },
+
+    hotels:{
+      collection:'hotel',
+      via:'trip'
     }
   }
 };
