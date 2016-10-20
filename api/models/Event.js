@@ -1,9 +1,7 @@
 /**
  * Event.js
- *
- * @description :: TODO: You might write a short summary of how this model works and what it represents here.
  * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
- * An event belongs to a single trip
+ *  Event represents the event in which ppl go on the trip.
  */
 
 module.exports = {
@@ -40,7 +38,10 @@ module.exports = {
     }
   },
 
-  beforeCreate: function(options, cb) {
+  //validates that the event lies within the trip date range
+  //validates that the event end time is after start time
+  //fires before the event is created
+  beforeCreate: function validateEvent(options, cb) {
     var eventStart = moment(options.startTime, "MM-DD-YYYY");
     var eventEnd = moment(options.endTime, "MM-DD-YYYY");
     var tripId = options.trip;
@@ -51,7 +52,6 @@ module.exports = {
         return cb(new Error("error finding the trip with the given id"), null);
       }
       var startDateOfTrip = moment(trip.startDate, "MM-DD-YYYY");
-
       var endDateOfTrip = moment(trip.endDate, "MM-DD-YYYY");
 
       //return true if trip start <  event start < event end < trip end
@@ -60,7 +60,8 @@ module.exports = {
         && (eventEnd > eventStart)) {
         cb(null, true);
       } else {
-        return cb(new Error("The event lies outside of the trip time"), null);
+        return cb(new Error("The event lies outside of the trip time or the" +
+          "event start is after the event end time"), null);
       }
     });
   }

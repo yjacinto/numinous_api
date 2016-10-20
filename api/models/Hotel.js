@@ -1,7 +1,7 @@
 /**
  * Hotel.js
  *
- * @description :: TODO: You might write a short summary of how this model works and what it represents here.
+ * @description :: TODO: Represents a hotel in which ppl stay for a number of nights.
  * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
  */
 
@@ -14,15 +14,19 @@ module.exports = {
     },
 
     numNights:{
-      type: 'integer'
+      type: 'integer',
+      required: true
     },
 
     address:{
-      type: 'string'
+      type: 'string',
+      required: false
     },
 
+    //may need to make type string to handle (per night, per guest, etc)
     expectedCost:{
-      type: 'float'
+      type: 'float',
+      required: false
     },
 
     trip:{

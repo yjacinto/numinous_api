@@ -1,7 +1,7 @@
 /**
  * Trip.js
  *
- * @description :: TODO: You might write a short summary of how this model works and what it represents here.
+ * @description :: Trip resents the trip from one destination to another.
  * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
  */
 
@@ -37,6 +37,19 @@ module.exports = {
       collection:'hotel',
       via:'trip'
     }
-  }
+  },
+
+    beforeCreate: function(options, cb){
+      TimeValidationService.startEndTimeValidate({
+        start: options.startDate,
+        end: options.endDate},
+        function(err) {
+          if (err) {
+            return cb(err, false);
+          }
+        return cb(null, true);
+      })
+    }
+
 };
 

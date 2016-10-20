@@ -9,7 +9,7 @@ module.exports = {
 
 
   //returns all the trips in the database
-  //throws serverError otherwise.
+  //throws serverError otherwise
   index: function (req, res) {
 
     Trip.find().exec(function (err, trips) {
@@ -29,14 +29,13 @@ module.exports = {
     Trip.create({
       originCity: req.param('originCity'),
       destinationCity: req.param('destinationCity'),
-      startDate: moment(req.param('startDate'), 'MM-DD-YYYY').format('L'),
-      endDate: moment(req.param('endDate'), 'MM-DD-YYYY').format('L')
+      startDate: moment(req.param('startDate'), 'MM-DD-YYYY').format("YYYY-MM-DD"),
+      endDate: moment(req.param('endDate'), 'MM-DD-YYYY').format("YYYY-MM-DD")
     }).exec(function(err, newTrip){
 
       if (err) {
         return res.badRequest(err);
       }
-
       console.log('Created new trip');
       return res.json(newTrip);
     });
