@@ -1,5 +1,5 @@
 {
-  "name": "numinous_api",
+  "name": "NuminousAPI",
   "private": true,
   "version": "0.0.0",
   "description": "a Sails application",
@@ -18,23 +18,33 @@
     "grunt-contrib-uglify": "1.0.1",
     "grunt-contrib-watch": "1.0.0",
     "grunt-sails-linker": "~0.10.1",
-    "grunt-sync": "0.5.2",
+    "grunt-sync": "0.2.4",
     "include-all": "~0.1.6",
+    "moment": "^2.15.1",
     "rc": "1.0.1",
     "sails": "~0.12.4",
     "sails-auth": "^2.1.3",
     "sails-disk": "~0.10.9",
-    "sails-mysql": "^0.11.5"
+    "swig": "^1.4.2"
   },
   "scripts": {
     "debug": "node debug app.js",
-    "start": "node app.js"
+    "start": "node app.js",
+    "test": "mocha"
   },
   "main": "app.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/Eevee/numinous_api.git"
+    "url": "git://github.com/Eevee/NuminousAPI.git"
   },
   "author": "Eevee",
-  "license": ""
+  "license": "",
+  "devDependencies": {
+    "assert": "^1.4.1",
+    "chai": "^3.5.0",
+    "grunt": "^0.4.5",
+    "grunt-bower-update": "^0.1.2",
+    "mocha": "^3.1.2",
+    "supertest": "^2.0.0"
+  }
 }

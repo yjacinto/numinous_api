@@ -7,9 +7,8 @@
 
 module.exports = {
 
-
   schema: 'true',
-	connection: 'Numinous',
+	connection: 'mysql',
 	tableName: 'user',
 
   attributes: {
