@@ -13,9 +13,6 @@ module.exports = {
 	tableName: 'user',
 
   attributes: {
-      fname : {type : 'string', required : true},
-      lname : {type : 'string', required : true},
-      username : {type : 'string', required : true},
       email : {type : 'string', required : true},
       password : {type : 'string', required : true}
   },

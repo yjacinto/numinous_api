@@ -21,9 +21,6 @@ module.exports = {
 
    create: function(req, res){
      User.create({
-       fname : req.param('fname'),
-       lname : req.param('lname'),
-       username : req.param('username'),
        email : req.param('email'),
        password : req.param('password')
      }).exec(function (err, newUser) {
