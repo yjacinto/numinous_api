@@ -6,6 +6,18 @@
  */
 
 module.exports = {
-	
+
+  getInfo: function(req,res){
+    console.log(req);
+    User.findOne({
+      'email': req.param('email')
+    }).exec(function(err,user){
+      if(err){
+        return res.notFound();
+      }else{
+        res.json(user.email);
+      }
+    })
+  }
 };
 

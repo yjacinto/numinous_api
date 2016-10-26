@@ -52,6 +52,10 @@ module.exports.policies = {
 	// }
 
   'PostController': {
-    '*': 'isAuthenticated'
+    '*': 'isAuthed'
   },
+
+  UserController: {
+    getInfo: 'isAuthed'
+  }
 };

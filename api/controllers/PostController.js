@@ -5,12 +5,7 @@
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 
-module.exports.policies = {
+module.exports = {
 
-  '*': true,
-
-  'PostController': {
-    '*': 'isAuthenticated'
-  },
 
 };
