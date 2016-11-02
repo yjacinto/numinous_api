@@ -15,7 +15,11 @@ module.exports = {
       if(err){
         return res.notFound();
       }else{
-        res.json(user.email);
+        res.json({first_name: user.first_name,
+            last_name: user.last_name,
+            email: user.email,
+            id: user.id
+        })
       }
     })
   }

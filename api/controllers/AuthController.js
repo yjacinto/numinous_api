@@ -6,8 +6,8 @@
  */
 
 var passport = require('passport');
-var config = require('../../config/database.js');
-var jwt         = require('jwt-simple');
+var config   = require('../../config/database.js');
+var jwt      = require('jwt-simple');
 
 module.exports = {
 
@@ -16,20 +16,6 @@ module.exports = {
     shortcuts: false,
     rest: false
   },
-/*
-  login: function(req, res) {
-
-    passport.authenticate('local', function(err, user, info) {
-      if ((err) || (!user)) {
-        return res.badRequest('failed to authenticate');
-      }
-      req.logIn(user, function(err) {
-        if (err) res.send(err);
-        return res.ok('successfully logged in');
-      });
-
-    })(req, res);
-  },*/
 
   authenticate: function(req,res){
     User.findOne({
@@ -38,7 +24,6 @@ module.exports = {
       if(err){
         res.badRequest();
       }
-
       if(!user){
         res.notFound("Couldn't find the user");
       }else{
@@ -58,16 +43,20 @@ module.exports = {
     });
   },
 
+
   logout: function(req, res) {
     req.logout();
     res.redirect('/');
   },
 
   signup: function(req, res) {
-    if(!req.param('email') || !req.param('password')){
-      res.json({success: false, msg: 'Please enter pass name and password.'});
+    if(!req.param('email') || !req.param('password') ||
+      !req.param('first_name') || !req.param('last_name')){
+      res.json({success: false, msg: 'Please enter name, email, and passwords.'});
     }else {
       User.create({
+        first_name: req.param('first_name'),
+        last_name: req.param('last_name'),
         email: req.param('email'),
         password: req.param('password')
       }).exec(function(err,user){

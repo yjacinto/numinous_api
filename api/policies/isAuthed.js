@@ -1,5 +1,12 @@
+/*
+* This policy ensures that the token sent along with the
+* logged in user's request is a valid token and if so, allows actions
+* to be performed on the controllers defined in /config/polices.js
+*
+*/
+
 var config = require('../../config/database.js');
-var jwt         = require('jwt-simple');
+var jwt    = require('jwt-simple');
 
 module.exports = function(req, res, next) {
   var token;
@@ -10,7 +17,7 @@ module.exports = function(req, res, next) {
     if (parted.length === 1) {
       token = parted[0];
     }else{
-      return res.notFound('wtf?');
+      return res.notFound();
     }
   }else if (req.param('token')) {
     token = req.param('token');
@@ -18,10 +25,9 @@ module.exports = function(req, res, next) {
     //to protect blueprints
     delete req.query.token;
   }else{
-    return res.badRequest('put token in header or pass it as a parameter')
+    return res.badRequest('No token sent with the request')
   }
   var decoded = jwt.decode(token, config.secret);
-  //res.send('plz work ' + decoded.email);
   req.query.email = decoded.email;
   console.log(req.query.email);
   next();
