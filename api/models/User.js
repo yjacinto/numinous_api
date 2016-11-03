@@ -60,4 +60,5 @@ module.exports = {
     cb(null, isMatch);
     });
   }
-}
+};
+

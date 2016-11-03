@@ -7,6 +7,7 @@
 
 module.exports = {
 
+
   getInfo: function(req,res){
     console.log(req);
     User.findOne({
