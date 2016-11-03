@@ -5,17 +5,60 @@
  * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
  */
 
+var bcrypt = require('bcrypt');
+
 module.exports = {
-
-  schema: 'true',
-	connection: 'mysql', //edwin you might need to change to mysql
-	tableName: 'user',
-
   attributes: {
-      email : {type : 'string', required : true},
-      password : {type : 'string', required : true}
+    first_name:{
+      type: 'string',
+      required: true,
+      unique: false
+    },
+    last_name: {
+      type: 'string',
+      required: true,
+      unique: false
+    },
+    email: {
+      type: 'email',
+      required: true,
+      unique: true
+    },
+    password: {
+      type: 'string',
+      minLength: 6,
+      required: true
+    },
+    toJSON: function() {
+      var obj = this.toObject();
+      delete obj.password;
+      return obj;
+    }
   },
-   autoCreatedAt: true,
 
+  //before creating, hash the user's password
+  beforeCreate: function(user, cb) {
+    bcrypt.genSalt(10, function(err, salt) {
+      bcrypt.hash(user.password, salt, function(err, hash) {
+        if (err) {
+          console.log(err);
+          cb(err);
+        } else {
+          user.password = hash;
+          cb();
+        }
+      });
+    });
+  },
+
+  //check to see if inputted password matches the password stored in the db
+  comparePassword: function (passw, user, cb) {
+  bcrypt.compare(passw, user.password, function (err, isMatch) {
+    if (err) {
+      return cb(err);
+    }
+    cb(null, isMatch);
+    });
+  }
 };
 

@@ -19,6 +19,4 @@ module.exports = {
       return done(new Error("event start is after the event end time"), null);
     }
   }
-
-
 }

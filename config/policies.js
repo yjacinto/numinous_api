@@ -26,7 +26,9 @@ module.exports.policies = {
   *                                                                          *
   ***************************************************************************/
 
-  // '*': true,
+  '*': [
+    true,
+  ],
 
   /***************************************************************************
   *                                                                          *
@@ -48,4 +50,12 @@ module.exports.policies = {
 		// before letting any users feed our rabbits
 		// feed : ['isNiceToAnimals', 'hasRabbitFood']
 	// }
+
+  'PostController': {
+    '*': 'isAuthed'
+  },
+
+  UserController: {
+    getInfo: 'isAuthed'
+  }
 };
