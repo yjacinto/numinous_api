@@ -26,8 +26,22 @@ module.exports = {
     },
     password: {
       type: 'string',
-      minLength: 6,
+      minLength: 8,
       required: true
+    },
+
+    //associations
+    trips:{
+      collection: 'trip',
+      via:'userTrips'
+    },
+    friends: {
+      collection: 'friend',
+      via: 'user'
+    },
+    userProfile:{
+      collection: 'userProfile',
+      via: 'user'
     },
     toJSON: function() {
       var obj = this.toObject();
