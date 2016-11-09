@@ -55,7 +55,13 @@ module.exports.policies = {
     '*': 'isAuthed'
   },
 
+  'TripController':{
+    create: 'isAuthed'
+  },
+
   UserController: {
     getInfo: 'isAuthed'
   }
+
+
 };

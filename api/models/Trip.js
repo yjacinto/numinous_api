@@ -38,7 +38,7 @@ module.exports = {
       via:'trip'
     },
 
-    userTrips:{
+    user:{
       model: 'user'
     }
   },

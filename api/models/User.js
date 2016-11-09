@@ -33,7 +33,7 @@ module.exports = {
     //associations
     trips:{
       collection: 'trip',
-      via:'userTrips'
+      via:'user'
     },
     friends: {
       collection: 'friend',

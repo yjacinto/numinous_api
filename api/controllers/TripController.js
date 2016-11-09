@@ -30,7 +30,8 @@ module.exports = {
       originCity: req.param('originCity'),
       destinationCity: req.param('destinationCity'),
       startDate: moment(req.param('startDate'), 'MM-DD-YYYY').format("YYYY-MM-DD"),
-      endDate: moment(req.param('endDate'), 'MM-DD-YYYY').format("YYYY-MM-DD")
+      endDate: moment(req.param('endDate'), 'MM-DD-YYYY').format("YYYY-MM-DD"),
+      user: req.param('id')
     }).exec(function(err, newTrip){
 
       if (err) {

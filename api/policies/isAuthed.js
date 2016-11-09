@@ -28,8 +28,7 @@ module.exports = function(req, res, next) {
     return res.badRequest('No token sent with the request')
   }
   var decoded = jwt.decode(token, config.secret);
-  req.query.email = decoded.email;
-  console.log(req.query.email);
+  console.log(decoded);
+  req.query.id = decoded.id;
   next();
-
 };
