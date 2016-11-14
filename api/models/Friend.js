@@ -14,7 +14,12 @@ module.exports = {
     },
     friend_id: {
       type: 'integer'
-    },
+    }
   }
+
+  /*beforeCreate: function(friend, cb) {
+    //check if connection alreay in the database.
+
+  }*/
 };
 

@@ -7,14 +7,16 @@
 
 module.exports = {
 
+
   addFriend: function(req,res) {
     Friend.create({
-      user: req.param('user'),
+      user: req.param('id'),
       friend_id: req.param('friend_id')
     }).exec(function (err, friend) {
       if (err) {
         res.badRequest(err);
       }
+      console.log('added friend ' + friend.toString());
       res.json(friend);
     });
   },
@@ -34,5 +36,6 @@ module.exports = {
       res.json(friend);
     });
   }
+
 };
 

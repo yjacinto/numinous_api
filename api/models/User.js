@@ -73,6 +73,61 @@ module.exports = {
     }
     cb(null, isMatch);
     });
+  },
+
+  //get all nonfriends of user.
+  getNonFriends: function(id, cb){
+    Friend.find({
+      or: [
+        {user: id},
+        {friend_id: id}
+      ]
+    }).exec(function(err, friends){
+      if(err){
+        return cb(err);
+      }
+      console.log(friends);
+      var ids = [] ;
+      friends.forEach(function(friend){
+        ids.push(friend.friend_id);
+      });
+      console.log(ids.toString());
+      User.find({
+        id: { '!': ids }
+      }).exec(function(err,everyUserNonFriend){
+        if(err){
+          return cb(err);
+        }
+        cb(null,everyUserNonFriend);
+      });
+    })
+  },
+
+  getFriends: function(id, cb){
+    Friend.find({
+      or: [
+        {user: id},
+        {friend_id: id}
+      ]
+    }).exec(function(err, friends){
+      console.log('friends after find friends'+ friends.toString());
+      if(err){
+        return cb(err);
+      }
+      var ids = [] ;
+      friends.forEach(function(friend){
+        ids.push(friend.friend_id);
+      });
+      console.log('FRIEND ID ARRAY:' + ids.toString());
+      User.find({
+        id: ids
+      }).exec(function(err,everyFriend){
+        if(err){
+          return cb(err);
+        }
+        cb(null,everyFriend);
+      });
+    })
   }
 };
 

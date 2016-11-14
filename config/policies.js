@@ -60,7 +60,11 @@ module.exports.policies = {
   },
 
   UserController: {
-    getInfo: 'isAuthed'
+   '*': 'isAuthed'
+  },
+
+  FriendController:{
+    '*': 'isAuthed'
   }
 
 

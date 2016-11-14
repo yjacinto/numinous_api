@@ -9,6 +9,7 @@
 
 module.exports = {
 
+  //creates an event and returns ithe created event upon success.
   create: function (req, res) {
 
     Event.create({
