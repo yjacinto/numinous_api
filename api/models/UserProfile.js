@@ -8,7 +8,18 @@
 module.exports = {
 
   attributes: {
-
+    address:{
+      type:'string',
+      required:'false'
+    },
+    bio:{
+      type:'longtext',
+      required:'false'
+    },
+    user:{
+      model:'user',
+      unique: true
+    }
   }
 };
 
