@@ -26,8 +26,22 @@ module.exports = {
     },
     password: {
       type: 'string',
-      minLength: 6,
+      minLength: 8,
       required: true
+    },
+
+    //associations
+    trips:{
+      collection: 'trip',
+      via:'user'
+    },
+    friends: {
+      collection: 'friend',
+      via: 'user'
+    },
+    userProfile:{
+      collection: 'userProfile',
+      via: 'user'
     },
     toJSON: function() {
       var obj = this.toObject();
@@ -59,6 +73,81 @@ module.exports = {
     }
     cb(null, isMatch);
     });
+  },
+
+  //get all nonfriends of user.
+  getNonFriends: function(id, cb){
+    Friend.find({
+      or: [
+        {user: id},
+        {friend_id: id}
+      ]
+    }).exec(function(err, friends){
+      console.log(friends);
+      if(err){
+        return cb(err);
+      }
+      if(friends.length > 0){
+        //if friends found, find users who aren't friends
+        var ids = [];
+        friends.forEach(function (friend) {
+          if(friend.user != id){
+            ids.push(friend.user);
+          }else{
+            ids.push(friend.friend_id);
+          }
+
+        });
+        console.log(ids);
+        User.find({
+          id: {'!': ids}
+        }).exec(function (err, everyUserNonFriend) {
+          if (err) {
+            return cb(err);
+          }
+          cb(null, everyUserNonFriend);
+        });
+      } else {
+        //if no friends, return all users in table
+        User.find().exec(function(err,everyUser){
+          if(err){
+            return cb(err);
+          }
+          cb(null,everyUser);
+        });
+      }
+    })
+  },
+
+  getFriends: function(id, cb){
+    Friend.find({
+      or: [
+        {user: id},
+        {friend_id: id}
+      ]
+    }).exec(function(err, friends){
+      if(err){
+        return cb(err);
+      }
+      var ids = [] ;
+      friends.forEach(function(friend){
+        if(friend.user != id){
+          ids.push(friend.user);
+        }else {
+          ids.push(friend.friend_id);
+        }
+
+      });
+      console.log('getFriends: ' + ids);
+      User.find({
+        id: ids
+      }).exec(function(err,everyFriend){
+        if(err){
+          return cb(err);
+        }
+        cb(null,everyFriend);
+      });
+    })
   }
 };
 

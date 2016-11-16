@@ -36,6 +36,10 @@ module.exports = {
     hotels:{
       collection:'hotel',
       via:'trip'
+    },
+
+    user:{
+      model: 'user'
     }
   },
 

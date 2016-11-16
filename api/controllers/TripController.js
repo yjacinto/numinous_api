@@ -30,7 +30,8 @@ module.exports = {
       originCity: req.param('originCity'),
       destinationCity: req.param('destinationCity'),
       startDate: moment(req.param('startDate'), 'MM-DD-YYYY').format("YYYY-MM-DD"),
-      endDate: moment(req.param('endDate'), 'MM-DD-YYYY').format("YYYY-MM-DD")
+      endDate: moment(req.param('endDate'), 'MM-DD-YYYY').format("YYYY-MM-DD"),
+      user: req.param('id')
     }).exec(function(err, newTrip){
 
       if (err) {
@@ -41,10 +42,10 @@ module.exports = {
     });
   },
 
-  //update the trip by id, given the post data.
+  //update the trip by trip_id, given the post data.
   update: function(req, res) {
 
-    Trip.update({id: req.param('id')}, {
+    Trip.update({id: req.param('trip_id')}, {
       originCity: req.param('originCity'),
       destinationCity: req.param('destinationCity'),
       startDate: req.param('startDate'),
@@ -59,7 +60,7 @@ module.exports = {
 
   //finds a trip by id
   findById: function (req, res){
-    Trip.findOne(req.param('id')).exec(function(err, trip){
+    Trip.findOne(req.param('trip_id')).exec(function(err, trip){
       if(err){
         return res.badRequest(err);
       }
@@ -72,7 +73,7 @@ module.exports = {
 
   //find events by trip id
   getEventsById: function(req, res){
-    Trip.find({id: req.param('id')}).populate('events')
+    Trip.find({id: req.param('trip_id')}).populate('events')
       .exec(function (err, Trip){
           if(err) {
             return res.badRequest(err);
@@ -83,7 +84,7 @@ module.exports = {
 
   //find hotel by trip id
   getHotelsById: function(req, res){
-    Trip.find({id: req.param('id')}).populate('hotels')
+    Trip.find({id: req.param('trip_id')}).populate('hotels')
       .exec(function (err, Trip){
         if(err){
           return res.badRequest(err);
