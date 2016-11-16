@@ -83,23 +83,39 @@ module.exports = {
         {friend_id: id}
       ]
     }).exec(function(err, friends){
+      console.log(friends);
       if(err){
         return cb(err);
       }
-      console.log(friends);
-      var ids = [] ;
-      friends.forEach(function(friend){
-        ids.push(friend.friend_id);
-      });
-      console.log(ids.toString());
-      User.find({
-        id: { '!': ids }
-      }).exec(function(err,everyUserNonFriend){
-        if(err){
-          return cb(err);
-        }
-        cb(null,everyUserNonFriend);
-      });
+      if(friends.length > 0){
+        //if friends found, find users who aren't friends
+        var ids = [];
+        friends.forEach(function (friend) {
+          if(friend.user != id){
+            ids.push(friend.user);
+          }else{
+            ids.push(friend.friend_id);
+          }
+
+        });
+        console.log(ids);
+        User.find({
+          id: {'!': ids}
+        }).exec(function (err, everyUserNonFriend) {
+          if (err) {
+            return cb(err);
+          }
+          cb(null, everyUserNonFriend);
+        });
+      } else {
+        //if no friends, return all users in table
+        User.find().exec(function(err,everyUser){
+          if(err){
+            return cb(err);
+          }
+          cb(null,everyUser);
+        });
+      }
     })
   },
 
@@ -110,15 +126,19 @@ module.exports = {
         {friend_id: id}
       ]
     }).exec(function(err, friends){
-      console.log('friends after find friends'+ friends.toString());
       if(err){
         return cb(err);
       }
       var ids = [] ;
       friends.forEach(function(friend){
-        ids.push(friend.friend_id);
+        if(friend.user != id){
+          ids.push(friend.user);
+        }else {
+          ids.push(friend.friend_id);
+        }
+
       });
-      console.log('FRIEND ID ARRAY:' + ids.toString());
+      console.log('getFriends: ' + ids);
       User.find({
         id: ids
       }).exec(function(err,everyFriend){

@@ -54,10 +54,10 @@ module.exports = {
 
   //getUsers who aren't friends with the requester.
   getNonFriends: function(req,res){
-    console.log(req.param('id'));
+    console.log('user id: '+ req.param('id'));
     User.getNonFriends(req.param('id'), function(err, nonFriends){
         if(err){
-          return res.badRequest(err);
+          return res.badRequest(err, 'error getting nonFriends');
         }
         return res.json(nonFriends);
       });

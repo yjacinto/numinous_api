@@ -42,17 +42,20 @@ module.exports = {
   //validates that the event end time is after start time
   //fires before the event is created
   beforeCreate: function validateEvent(options, cb) {
+    console.log(options);
     var eventStart = moment(options.startTime, "MM-DD-YYYY");
     var eventEnd = moment(options.endTime, "MM-DD-YYYY");
     var tripId = options.trip;
-    Trip.findOne({
+    Trip.find({
       id: tripId
     }).exec(function getTripTimes(err, trip) {
       if (err || trip === undefined) {
+        console.log(trip);
         return cb(new Error("error finding the trip with the given id"), null);
       }
-      var startDateOfTrip = moment(trip.startDate, "MM-DD-YYYY");
-      var endDateOfTrip = moment(trip.endDate, "MM-DD-YYYY");
+
+      var startDateOfTrip = moment(trip.startDate, "YYYY-MM-DD");
+      var endDateOfTrip = moment(trip.endDate, "YYYY-MM-DD");
 
       //return true if trip start <  event start < event end < trip end
       if ((eventStart > startDateOfTrip) && (eventStart < endDateOfTrip)
