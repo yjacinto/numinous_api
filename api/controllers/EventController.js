@@ -9,6 +9,7 @@
 
 module.exports = {
 
+  //creates an event and returns ithe created event upon success.
   create: function (req, res) {
 
     Event.create({
@@ -17,7 +18,7 @@ module.exports = {
       endTime: req.param('endTime'),
       location: req.param('location'),
       expected: req.param('expectedCost'),
-      trip: req.param('trip')
+      trip: req.param('trip_id')
     }).exec(function (err, newEvent) {
       if (err) {
         return res.badRequest(err);

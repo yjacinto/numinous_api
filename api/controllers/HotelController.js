@@ -6,10 +6,10 @@
  */
 
 module.exports = {
+
   //find or create?
   //returns hotel in json format given request parameters
   //of 'name', 'numNight', etc.
-  //
   create: function(req,res) {
     Hotel.create({
       name: req.param('name'),
@@ -26,7 +26,7 @@ module.exports = {
     });
   },
 
-  //
+  //updates a single hotel
   update: function(res, req){
     Hotel.update({id:req.param('id')}, {
       name: req.param('name'),

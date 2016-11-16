@@ -32,7 +32,7 @@ module.exports = {
           if (isMatch && !err) {
             // if user is found and password is right create a token
             var token = jwt.encode(user, config.secret);
-            console.log(token);
+            console.log('user token: ' + token);
             // return the information including token as JSON
             res.json({success: true, token: /*'JWT ' +*/ token});
           } else {
