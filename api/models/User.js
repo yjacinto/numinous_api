@@ -43,6 +43,10 @@ module.exports = {
       collection: 'userProfile',
       via: 'user'
     },
+    travelCompanion:{
+      model: 'travelCompanion'
+    },
+
     toJSON: function() {
       var obj = this.toObject();
       delete obj.password;

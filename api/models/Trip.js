@@ -40,7 +40,14 @@ module.exports = {
 
     user:{
       model: 'user'
+    },
+
+    travelCompanions:{
+      collection: 'travelCompanion',
+      via: 'trip'
     }
+
+    //travelCompanions
   },
 
     beforeCreate: function(options, cb){
