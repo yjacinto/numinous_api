@@ -42,14 +42,44 @@ module.exports = {
 
   //gets a user's trips
   getUserTrips: function(req,res){
-    User.find({id: req.param('id')}).populate('trips')
-      .exec(function (err, Trips){
+    User.findOne({
+      'id': req.param('id')
+    })
+      .populate('trips')
+      .exec(function (err, user){ //array of trips
+        console.log(user);
         if(err){
           return res.badRequest(err);
         }
-        return res.json(Trips);
+        return res.json(user);
       });
   },
+
+  //gets a user's trips
+  getUserTripsAndTravelers: function(req,res){
+    //console.log('is this shit even firing?');
+    User.findOne({id: req.param('id')})
+      .populate('trips')
+      .exec(function(err,user) {
+        if(err){return res.badRequest(err);}
+        if(!user){return res.badRequest(err);}
+        var toReturn = [];
+        async.each(user.trips, function (trip, each_cb) {
+          Trip.findOne(trip.id).populate('travelers').exec(function (err, tripPopulated) {
+            console.log(tripPopulated);
+            if (err) return each_cb(err);
+            //for (var person in tripPopulated.travelers) {
+              toReturn.push(tripPopulated);
+            //}
+            each_cb();
+          });
+        }, function (err) {
+          if (err) return next(err);
+          return res.json(toReturn);
+        });
+      });
+  },
+
 
   //getUsers who aren't friends with the requester.
   getNonFriends: function(req,res){

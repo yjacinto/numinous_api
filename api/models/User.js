@@ -31,11 +31,6 @@ module.exports = {
     },
 
     //associations
-    /*trips:{
-      collection: 'trip',
-      via:'user'
-    },*/
-
     friends: {
       collection: 'friend',
       via: 'user'
@@ -44,11 +39,6 @@ module.exports = {
       collection: 'userProfile',
       via: 'user'
     },
-    /*
-    travelGroups:{
-      collection: 'travelCompanion',
-      via: 'travelers'
-    },*/
 
     trips:{
       collection: 'trip',

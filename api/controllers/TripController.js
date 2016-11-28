@@ -79,7 +79,7 @@ module.exports = {
   //find events by trip id
   getEventsById: function(req, res){
 
-    Trip.find({id: req.param('trip_id')}).populate('events')
+    Trip.findOne({id: req.param('trip_id')}).populate('events')
       .exec(function (err, trip){
           if(err) {
             return res.badRequest(err);
@@ -90,7 +90,7 @@ module.exports = {
 
   getTravelersById: function(req,res){
 
-    Trip.find({id: req.param('trip_id')}).populate('travelers')
+    Trip.findOne({id: req.param('trip_id')}).populate('travelers')
       .exec(function (err, trip){
         if(err) {
           return res.badRequest(err);
