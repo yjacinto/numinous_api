@@ -31,10 +31,11 @@ module.exports = {
     },
 
     //associations
-    trips:{
+    /*trips:{
       collection: 'trip',
       via:'user'
-    },
+    },*/
+
     friends: {
       collection: 'friend',
       via: 'user'
@@ -43,8 +44,15 @@ module.exports = {
       collection: 'userProfile',
       via: 'user'
     },
-    travelCompanion:{
-      model: 'travelCompanion'
+    /*
+    travelGroups:{
+      collection: 'travelCompanion',
+      via: 'travelers'
+    },*/
+
+    trips:{
+      collection: 'trip',
+      via: 'travelers'
     },
 
     toJSON: function() {

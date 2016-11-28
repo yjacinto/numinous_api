@@ -12,11 +12,9 @@ module.exports = {
     User.find({
       id: { '!': req.param('id') }
     }).exec(function (err, user) {
-
       if (err) {
         return res.serverError(res);
       }
-
       return res.json(user);
     });
   },
@@ -32,7 +30,8 @@ module.exports = {
       if(err){
         return res.badRequest();
       }else{
-        res.json({first_name: user.first_name,
+        res.json({
+          first_name: user.first_name,
             last_name: user.last_name,
             email: user.email,
             id: user.id
@@ -72,35 +71,5 @@ module.exports = {
       return res.json(friends);
     });
   }
-
-  /*getUserFriends: function(req,res){
-    console.log('inside get user friends');
-    console.log(req.param('id'));
-    User.find({id: req.param('id')}).populate('friends')
-      .exec(function (err, user){
-        console.log(user);
-        if(err){
-          return res.badRequest(err);
-        }
-
-        function getFriends(friend){
-          User.findOne({id: friend.friend_id}).exec(function(err,user))
-        }
-        console.log(user[0].friends);
-        var friendArray = [];
-        var promise = user[0].friends.forEach(function(friend){
-          User.findOne({id: friend.friend_id}).then(function(err, found){
-            console.log(found);
-            friendArray.push(found);
-          }).catch(function(err){
-            console.log(err);
-          });
-        });
-        Promise.all(promise).then(function(){
-          console.log(friendArray);
-          return res.json(friendArray);
-        });
-      });
-  }*/
 };
 

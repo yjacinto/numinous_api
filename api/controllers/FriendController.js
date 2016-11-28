@@ -38,8 +38,6 @@ module.exports = {
   },
 
   deleteFriend: function(req,res){
-    console.log('inside deleteFriend');
-    console.log(req.param('friend_id'));
     Friend.destroy({
       or:[
         {user: req.param('id'),

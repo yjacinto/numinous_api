@@ -12,21 +12,22 @@ module.exports = {
       size: 128,
       required: true
     },
+
     destinationCity:{
       type: 'string',
       size: 128,
       required: true
     },
+
     startDate: {
       type: 'date',
       required: false
     },
+
     endDate: {
       type: 'date',
       required: false
     },
-    //numNights
-    //adminIDs
 
     events:{
       collection: 'event',
@@ -38,19 +39,26 @@ module.exports = {
       via:'trip'
     },
 
-    user:{
+    //user who created this trip
+    /*user:{
       model: 'user'
-    },
+    },*/
 
-    travelCompanions:{
-      collection: 'travelCompanion',
-      via: 'trip'
+    /*travelCompanions:{
+      model:'TravelCompanion',
+      unique: true
+    }*/
+
+    travelers:{
+      collection: 'user',
+      via: 'trips'
     }
 
-    //travelCompanions
+
   },
 
     beforeCreate: function(options, cb){
+      //first check whether the end time is after the start time.
       TimeValidationService.startEndTimeValidate({
         start: options.startDate,
         end: options.endDate},

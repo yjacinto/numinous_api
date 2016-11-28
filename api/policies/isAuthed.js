@@ -12,7 +12,7 @@ module.exports = function(req, res, next) {
   var token;
   if (req.headers && req.headers.authorization) {
     var parted = req.headers.authorization.split(' ');
-    //console.log(req.headers.authorization);
+    console.log(req.headers.authorization);
     //console.log(parted);
     if (parted.length === 1) {
       token = parted[0];
@@ -29,5 +29,6 @@ module.exports = function(req, res, next) {
   }
   var decoded = jwt.decode(token, config.secret);
   req.query.id = decoded.id;
+  console.log(req.query.id);
   next();
 };
