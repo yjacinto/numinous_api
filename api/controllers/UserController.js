@@ -57,7 +57,6 @@ module.exports = {
 
   //gets a user's trips
   getUserTripsAndTravelers: function(req,res){
-    //console.log('is this shit even firing?');
     User.findOne({id: req.param('id')})
       .populate('trips')
       .exec(function(err,user) {
@@ -65,7 +64,8 @@ module.exports = {
         if(!user){return res.badRequest(err);}
         var toReturn = [];
         async.each(user.trips, function (trip, each_cb) {
-          Trip.findOne(trip.id).populate('travelers').exec(function (err, tripPopulated) {
+          Trip.findOne(trip.id).populate('travelers')
+            .exec(function (err, tripPopulated) {
             console.log(tripPopulated);
             if (err) return each_cb(err);
             //for (var person in tripPopulated.travelers) {
