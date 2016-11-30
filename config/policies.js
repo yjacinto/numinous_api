@@ -69,6 +69,10 @@ module.exports.policies = {
 
   TripCompanionController:{
     '*': 'isAuthed'
+  },
+
+  UserProfileController:{
+    '*': 'isAuthed'
   }
 
 

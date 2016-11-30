@@ -80,7 +80,6 @@ module.exports = {
       });
   },
 
-
   //getUsers who aren't friends with the requester.
   getNonFriends: function(req,res){
     console.log('user id: '+ req.param('id'));

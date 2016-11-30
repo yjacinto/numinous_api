@@ -36,8 +36,7 @@ module.exports = {
       via: 'user'
     },
     userProfile:{
-      collection: 'userProfile',
-      via: 'user'
+      model:'UserProfile'
     },
 
     trips:{
@@ -65,6 +64,19 @@ module.exports = {
         }
       });
     });
+  },
+
+  //after creating a new account, create a new user profile and associate.
+  afterCreate: function(user, cb){
+    UserProfile.create({
+      bio: "",
+      user: user.id
+    }).exec(function(err, userprof){
+      if(err){ return cb(err, false);}
+      console.log('created new user profile');
+      console.log(userprof);
+      cb(null, true);
+    })
   },
 
   //check to see if inputted password matches the password stored in the db

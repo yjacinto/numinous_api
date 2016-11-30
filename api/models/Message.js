@@ -1,5 +1,5 @@
 /**
- * UserProfile.js
+ * Message.js
  *
  * @description :: TODO: You might write a short summary of how this model works and what it represents here.
  * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
@@ -8,13 +8,22 @@
 module.exports = {
 
   attributes: {
-    bio:{
-      type:'longtext',
-      required:'false'
+
+    message:{
+      type: 'string'
     },
+
     user:{
-      model:'user',
-      unique: true
+      type: 'string'
+    },
+
+    timestamp:{
+      type: 'datetime'
+    },
+
+    chatroom:{
+      model:'chatroom',
+      via: 'messages'
     }
   }
 };
