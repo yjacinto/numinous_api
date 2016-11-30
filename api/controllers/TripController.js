@@ -45,12 +45,13 @@ module.exports = {
           }).exec(function(err, chatroom){
             if(err){ return res.badRequest(err); }
             console.log('created a new chatroom with the id of ' + chatroom.id);
-            return res.ok();
+            res.send(newTrip);
+
           });
         })
       });
 
-      res.send(newTrip);
+
       //add user to the list of travelers of the trip
     });
   },
