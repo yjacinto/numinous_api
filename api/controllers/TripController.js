@@ -13,17 +13,15 @@ module.exports = {
   index: function (req, res) {
 
     Trip.find().exec(function (err, trips) {
-
       if (err) {
         return res.serverError(res);
       }
-
       return res.json(trips);
     });
   },
 
-  //accepts the request parameters and creates a Trip in the database.
-  //returns the newly created trip
+  //creates a Trip from parameters and inserts the creator of the trip
+  //into the list of travelers.
   create: function(req, res){
 
     Trip.create({
@@ -31,14 +29,20 @@ module.exports = {
       destinationCity: req.param('destinationCity'),
       startDate: moment(req.param('startDate'), 'MM-DD-YYYY').format("YYYY-MM-DD"),
       endDate: moment(req.param('endDate'), 'MM-DD-YYYY').format("YYYY-MM-DD"),
-      user: req.param('id')
+      traveler: req.param('id')
     }).exec(function(err, newTrip){
-
       if (err) {
         return res.badRequest(err);
       }
-      console.log('Created new trip');
-      return res.json(newTrip);
+      //add user to the list of travelers of the trip
+      User.findOne({id: req.param('id')}).exec(function(err, traveler){
+        traveler.trips.add(newTrip.id);
+        traveler.save(function(err){
+          if(err){return res.serverError(err);}
+          console.log('Created new trip');
+          return res.json(newTrip);
+        })
+      });
     });
   },
 
@@ -60,6 +64,7 @@ module.exports = {
 
   //finds a trip by id
   findById: function (req, res){
+
     Trip.findOne(req.param('trip_id')).exec(function(err, trip){
       if(err){
         return res.badRequest(err);
@@ -73,25 +78,41 @@ module.exports = {
 
   //find events by trip id
   getEventsById: function(req, res){
-    Trip.find({id: req.param('trip_id')}).populate('events')
-      .exec(function (err, Trip){
+
+    Trip.findOne({id: req.param('trip_id')}).populate('events')
+      .exec(function (err, trip){
           if(err) {
             return res.badRequest(err);
           }
-          return res.json(Trip);
+          return res.json(trip);
     });
   },
 
+  getTravelersById: function(req,res){
+
+    Trip.findOne({id: req.param('trip_id')}).populate('travelers')
+      .exec(function (err, trip){
+        if(err) {
+          return res.badRequest(err);
+        }
+        return res.json(trip);
+      });
+
+  },
+
+
   //find hotel by trip id
   getHotelsById: function(req, res){
+
     Trip.find({id: req.param('trip_id')}).populate('hotels')
-      .exec(function (err, Trip){
+      .exec(function (err, trip){
         if(err){
           return res.badRequest(err);
         }
-        return res.json(Trip);
+        return res.json(trip);
       });
   }
+
 
 }//module
 

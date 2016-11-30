@@ -31,10 +31,6 @@ module.exports = {
     },
 
     //associations
-    trips:{
-      collection: 'trip',
-      via:'user'
-    },
     friends: {
       collection: 'friend',
       via: 'user'
@@ -43,6 +39,12 @@ module.exports = {
       collection: 'userProfile',
       via: 'user'
     },
+
+    trips:{
+      collection: 'trip',
+      via: 'travelers'
+    },
+
     toJSON: function() {
       var obj = this.toObject();
       delete obj.password;

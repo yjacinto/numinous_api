@@ -65,6 +65,10 @@ module.exports.policies = {
 
   FriendController:{
     '*': 'isAuthed'
+  },
+
+  TripCompanionController:{
+    '*': 'isAuthed'
   }
 
 

@@ -12,11 +12,9 @@ module.exports = {
     User.find({
       id: { '!': req.param('id') }
     }).exec(function (err, user) {
-
       if (err) {
         return res.serverError(res);
       }
-
       return res.json(user);
     });
   },
@@ -32,7 +30,8 @@ module.exports = {
       if(err){
         return res.badRequest();
       }else{
-        res.json({first_name: user.first_name,
+        res.json({
+          first_name: user.first_name,
             last_name: user.last_name,
             email: user.email,
             id: user.id
@@ -43,14 +42,44 @@ module.exports = {
 
   //gets a user's trips
   getUserTrips: function(req,res){
-    User.find({id: req.param('id')}).populate('trips')
-      .exec(function (err, Trips){
+    User.findOne({
+      'id': req.param('id')
+    })
+      .populate('trips')
+      .exec(function (err, user){ //array of trips
+        console.log(user);
         if(err){
           return res.badRequest(err);
         }
-        return res.json(Trips);
+        return res.json(user);
       });
   },
+
+  //gets a user's trips
+  getUserTripsAndTravelers: function(req,res){
+    //console.log('is this shit even firing?');
+    User.findOne({id: req.param('id')})
+      .populate('trips')
+      .exec(function(err,user) {
+        if(err){return res.badRequest(err);}
+        if(!user){return res.badRequest(err);}
+        var toReturn = [];
+        async.each(user.trips, function (trip, each_cb) {
+          Trip.findOne(trip.id).populate('travelers').exec(function (err, tripPopulated) {
+            console.log(tripPopulated);
+            if (err) return each_cb(err);
+            //for (var person in tripPopulated.travelers) {
+              toReturn.push(tripPopulated);
+            //}
+            each_cb();
+          });
+        }, function (err) {
+          if (err) return next(err);
+          return res.json(toReturn);
+        });
+      });
+  },
+
 
   //getUsers who aren't friends with the requester.
   getNonFriends: function(req,res){
@@ -72,35 +101,5 @@ module.exports = {
       return res.json(friends);
     });
   }
-
-  /*getUserFriends: function(req,res){
-    console.log('inside get user friends');
-    console.log(req.param('id'));
-    User.find({id: req.param('id')}).populate('friends')
-      .exec(function (err, user){
-        console.log(user);
-        if(err){
-          return res.badRequest(err);
-        }
-
-        function getFriends(friend){
-          User.findOne({id: friend.friend_id}).exec(function(err,user))
-        }
-        console.log(user[0].friends);
-        var friendArray = [];
-        var promise = user[0].friends.forEach(function(friend){
-          User.findOne({id: friend.friend_id}).then(function(err, found){
-            console.log(found);
-            friendArray.push(found);
-          }).catch(function(err){
-            console.log(err);
-          });
-        });
-        Promise.all(promise).then(function(){
-          console.log(friendArray);
-          return res.json(friendArray);
-        });
-      });
-  }*/
 };
 
