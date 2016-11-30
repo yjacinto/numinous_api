@@ -23,7 +23,7 @@ module.exports = {
           return res.notFound();
         }
         if(err){
-          return res.badRequest();
+          return res.badRequest(err);
         }else{
           res.json({
             first_name: user.first_name,
@@ -45,9 +45,9 @@ module.exports = {
     UserProfile.update({
       user: req.param('id')
     },{
-      bio: req.param('about')
+      bio: req.param('bio')
     }).exec(function(err, updatedProfile) {
-      if(err){ return res.badRequest();}
+      if(err){ return res.badRequest(err);}
       console.log(updatedProfile);
       res.json(updatedProfile.bio);
     });
