@@ -75,5 +75,9 @@ module.exports.policies = {
     '*': 'isAuthed'
   }
 
+  /*ChatRoomController:{
+    '*': 'isAuthed'
+  }*/
+
 
 };

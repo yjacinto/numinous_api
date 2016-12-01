@@ -21,9 +21,10 @@ module.exports = {
       type: 'datetime'
     },
 
+    //one to many relationship with ChatRoom
     chatroom:{
-      model:'chatroom',
-      via: 'messages'
+      model:'chatroom'
+      //via: 'messages'
     }
   }
 };

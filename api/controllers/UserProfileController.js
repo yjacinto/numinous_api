@@ -31,8 +31,7 @@ module.exports = {
             bio: userProfile.bio,
             email: user.email,
             id: user.id,
-            createdAt: userProfile.createdAt,
-
+            createdAt: userProfile.createdAt
           })
         }
       });
