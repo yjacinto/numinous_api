@@ -55,7 +55,7 @@ module.exports = {
       });
   },
 
-  //gets a user's trips
+  //gets a user's trips and the trip's travelers
   getUserTripsAndTravelers: function(req,res){
     User.findOne({id: req.param('id')})
       .populate('trips')
@@ -80,7 +80,7 @@ module.exports = {
       });
   },
 
-  //getUsers who aren't friends with the requester.
+  //Gets all users who aren't friends with the requester
   getNonFriends: function(req,res){
     console.log('user id: '+ req.param('id'));
     User.getNonFriends(req.param('id'), function(err, nonFriends){
@@ -91,7 +91,7 @@ module.exports = {
       });
   },
 
-  //getUsers who aren't friends with the requester.
+  //get user's friends
   getFriends: function(req,res){
     User.getFriends(req.param('id'), function(err, friends){
       if(err){

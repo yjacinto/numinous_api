@@ -12,23 +12,20 @@ module.exports = {
 	addUserToChat: function(req,res){
     console.log('inside adduser to chat');
     if (!req.isSocket) { return res.badRequest('req must be socket request'); }
+    if (req.param('trip_id') == null) { return res.badRequest('Attach trip id'); }
     ChatRoom.findOne({
       trip: req.param('trip_id')
     }).populate('messages')
       .exec(function(err, chatroom){
         console.log(chatroom);
-      //subscribe socket to specific chatroom.
-      /*sails.sockets.join(req, chatroom.id, function(err) {
-        if (err) { return res.serverError(err); }
-        return res.json(chatroom);
-      });*/
-      ChatRoom.subscribe(req,chatroom.id);
-        return res.json(chatroom.messages);
+        ChatRoom.subscribe(req,chatroom.id);
+        return res.send(chatroom.messages);
     });
   },
 
   sendMessage: function(req,res){
     if(!req.isSocket){return res.badRequest('req is not socket req');}
+    if (req.param('trip_id') == null) { return res.badRequest('Attach trip id'); }
     Trip.findOne({
       id: req.param('trip_id')
     }).populate('chatroom')
@@ -47,6 +44,7 @@ module.exports = {
           console.log('before publishAdd: ' + trip.chatroom[0].id);
           console.log(message);
           ChatRoom.message(message.chatroom, {
+              user: message.user,
               id: message.id,
               timestamp: message.timestamp,
               message: message.message
