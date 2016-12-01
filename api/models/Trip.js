@@ -52,6 +52,12 @@ module.exports = {
     travelers:{
       collection: 'user',
       via: 'trips'
+    },
+
+    //contains one chatroom per trip.
+    chatroom:{
+      collection:'chatroom',
+      via: 'trip'
     }
 
 
@@ -67,8 +73,31 @@ module.exports = {
             return cb(err, false);
           }
         return cb(null, true);
-      })
-    }
+      });
+    },
+
+    /*//after creating trip, create a chatroom and
+    afterCreate: function(newTrip, cb){
+      console.log('inside afterCreate');
+      console.log(newTrip);
+      User.findOne({id: newTrip.travelers.id}).exec(function(err, traveler){
+        console.log('after traveler');
+        traveler.trips.add(newTrip.id);
+        traveler.save(function(err){
+          if(err){ return res.serverError(err); }
+          console.log('Created new traveler');
+          ChatRoom.create({
+            trip: newTrip.id
+          }).exec(function(err, chatroom){
+            if(err){ return cb(err, false); }
+            console.log('created a new chatroom with the id of ' + chatroom.id);
+            return cb(null, chatroom);
+          });
+        })
+      });
+
+
+    }*/
 
 };
 

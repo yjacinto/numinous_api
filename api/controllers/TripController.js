@@ -34,15 +34,25 @@ module.exports = {
       if (err) {
         return res.badRequest(err);
       }
-      //add user to the list of travelers of the trip
       User.findOne({id: req.param('id')}).exec(function(err, traveler){
+        console.log('after traveler');
         traveler.trips.add(newTrip.id);
         traveler.save(function(err){
-          if(err){return res.serverError(err);}
-          console.log('Created new trip');
-          return res.json(newTrip);
+          if(err){ return res.serverError(err); }
+          console.log('Created new traveler');
+          ChatRoom.create({
+            trip: newTrip.id
+          }).exec(function(err, chatroom){
+            if(err){ return res.badRequest(err); }
+            console.log('created a new chatroom with the id of ' + chatroom.id);
+            res.send(newTrip);
+
+          });
         })
       });
+
+
+      //add user to the list of travelers of the trip
     });
   },
 
