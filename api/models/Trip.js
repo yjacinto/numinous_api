@@ -20,12 +20,12 @@ module.exports = {
     },
 
     startDate: {
-      type: 'date',
+      type: 'datetime',
       required: false
     },
 
     endDate: {
-      type: 'date',
+      type: 'datetime',
       required: false
     },
 
@@ -53,7 +53,6 @@ module.exports = {
       collection: 'user',
       via: 'trips'
     }
-
 
   },
 
