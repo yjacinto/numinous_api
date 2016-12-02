@@ -9,15 +9,14 @@
 
 module.exports = {
 
-  //creates an event and returns ithe created event upon success.
+  //creates an event and returns the created event upon success.
   create: function (req, res) {
-
     Event.create({
       name: req.param('name'),
-      startTime: req.param('startTime'),
-      endTime: req.param('endTime'),
+      startTime: moment(req.param('startTime')).format("YYYY-MM-DD HH:mm"),
+      endTime: moment(req.param('endTime')).format("YYYY-MM-DD HH:mm"),
       location: req.param('location'),
-      expected: req.param('expectedCost'),
+      place_id: req.param('place_id'),
       trip: req.param('trip_id')
     }).exec(function (err, newEvent) {
       if (err) {
