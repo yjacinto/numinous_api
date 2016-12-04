@@ -17,6 +17,9 @@ module.exports = {
       trip: req.param('trip_id')
     }).populate('messages')
       .exec(function(err, chatroom){
+        if(!chatroom){
+          return res.notFound('Could not find chatroom');
+        }
         console.log(chatroom);
         ChatRoom.subscribe(req,chatroom.id);
         return res.send(chatroom.messages);

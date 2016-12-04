@@ -32,7 +32,7 @@ module.exports = {
       traveler: req.param('id')
     }).exec(function(err, newTrip){
       if (err) {
-        return res.badRequest(err);
+        res.send({success: false, msg: err});
       }
       User.findOne({id: req.param('id')}).exec(function(err, traveler){
         console.log('after traveler');

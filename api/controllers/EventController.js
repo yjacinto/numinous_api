@@ -20,11 +20,10 @@ module.exports = {
       trip: req.param('trip_id')
     }).exec(function (err, newEvent) {
       if (err) {
-        return res.badRequest(err);
+        res.send({success: false, msg: err});
       }
       console.log('Created new Event:' + newEvent);
       return res.json(newEvent);
-
     });
   },
 

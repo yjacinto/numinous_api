@@ -25,7 +25,7 @@ module.exports = {
         res.badRequest();
       }
       if(!user){
-        res.notFound("Couldn't find the user");
+        res.send({success: false, msg: 'User was not found.'});
       }else{
         User.comparePassword(req.param('password'), user, function(err, isMatch){
           if(err){return res.serverError(err)};
