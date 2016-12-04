@@ -28,15 +28,13 @@ module.exports = {
       required: false
     },
 
-    //Add Event
     place_id:{
       type: 'string',
       required: false
     },
 
     allDay: {
-      type: 'bit',
-      required: false,
+      type: 'boolean',
       defaultsTo: false
     },
 
