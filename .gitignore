@@ -116,6 +116,5 @@ nbproject
 .idea
 .node_history
 
-config/connections.js
 
 config/auth.js
